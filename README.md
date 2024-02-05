@@ -1,4 +1,4 @@
-# Aprendizado em typescript
+# Aprendizado em TypeScript
 
 1 - No início do arquivo, adicione `//@ts-check` para que o TypeScript verifique o código JavaScript em arquivo `.js`.
 
@@ -10,4 +10,12 @@
 
 3.2 - Para criar um arquivo de configuração do TypeScript, utilize o seguinte comando: `tsc --init`.
 
-4 - Annatotion, anotação, com o ts pode indicar qual será o tipo de dado de uma variável através de anotações, `: tipo`, `: string`. Inference, o ts consegue inferir o tipo de dado de expressões em Js. Sempre que ele conseguir inferir, de forma que não precisa de fazer a notação do dado.
+4 - Annotation, anotação, com o TypeScript pode-se indicar qual será o tipo de dado de uma variável através de anotações, `: tipo`, `: string`. Inference, o TypeScript consegue inferir o tipo de dado de expressões em JS. Sempre que ele conseguir inferir, não é necessário fazer a notação do dado.
+
+5 - Tipos primitivos ou básicos do TypeScript: string, number e boolean. O `typeof` é um operador de JS que retorna uma string indicando o tipo de dado. Os possíveis valores retornados por `typeof` são: string; number; boolean; function; object; undefined; bigint e symbol. O `typeof` funciona como um type guard.
+
+```typescript
+const frase = 'A Frase'
+console.log(typeof frase);
+// resposta: string
+```
