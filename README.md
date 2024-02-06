@@ -323,3 +323,150 @@ const honda: Moto = {
 console.log(honda instanceof Moto);
 // Moto is not defined, erro pois está utilizando função do JS em TS.
 ```
+
+12
+
+12.1 - Quando selecionamos um elemento do DOM com o `querySelector`, o objeto retornado dependerá da string que passarmos no método.
+
+```typescript
+document.querySelector('video'); // HTMLVideoElement
+document.querySelector('img'); // HTMLImageElement
+
+const link1 = document.querySelector('a'); // HTMLAnchorElement
+const link2 = document.querySelector('#ancora'); // Element
+
+link1?.href;
+link2?.href; // erro no ts
+```
+
+12.2 - O `querySelectorAll` retorna uma NodeList de elemento. Não confundir o nome da interface `NodeListOf` com o nome da classe `NodeList`.
+
+```typescript
+const links = document.querySelectorAll('.links');
+
+links.forEach((link) => {
+    if (link instanceof HTMLAnchorElement) {
+        console.log(link.href);
+    }else{
+        console.log(typeof link);
+    }
+})
+```
+
+13
+
+13.1 - Passa o evento como uma string e uma função de callback no método `addEventListener`. A função de callback possui um parâmetro que faz referência ao evento executado.
+
+```typescript
+const btn = document.querySelector('button');
+
+function handleClick(e: MouseEvent) {
+    console.log(e.pageX);
+}
+
+btn?.addEventListener('click', handleClick);
+
+function handleScroll(e: Event) {
+    console.log(e);
+}
+
+window.addEventListener('scroll', handleScroll);
+```
+
+13.2 - Uma função, quando criada para ser executada em diferentes tipos de eventos, deve receber como parâmetro o tipo comum entre elas `Event`.
+
+```typescript
+function ativarMenu(e: Event) {
+    if(e instanceof MouseEvent){
+        console.log(e.pageX);
+    }
+    if(e instanceof TouchEvent){
+        // Para pegar o primeiro toque na tela
+        console.log(e.touches[0].pageX);
+    }
+}
+
+document.documentElement.addEventListener('mousedown', ativarMenu);
+document.documentElement.addEventListener('touchstart', ativarMenu);
+window.addEventListener('keydown', ativarMenu)
+```
+
+ 13.3 - Dentro de uma função, o `this` faz referência ao objeto que executou a mesma. No Javascript o this pode ser passado como o primeiro parâmetro da função, mesmo não sendo necessário informar ele durante a execução.
+
+```typescript
+const btn = document.querySelector('button');
+
+function handleClick(this: HTMLButtonElement ,e: MouseEvent) {
+    console.log(this);
+}
+
+btn?.addEventListener('click', handleClick)
+```
+
+13.4 - O typescript não executa o javascript, assim ele não consegue assumir qual será o `target` ou `currentTarget` do evento executado. Os elementos são definidos como o tipo `EventTarget`, pois esse é o tipo mais comum entre os elementos que podem receber um evento.
+
+```typescript
+const btn = document.querySelector('button');
+
+function handleClick(e: MouseEvent) {
+    const element = e.currentTarget;
+    if (element instanceof HTMLElement)
+        console.log(element.innerHTML);
+}
+
+btn?.addEventListener('click', handleClick)
+```
+
+14 - Um tipo genérico é uma forma de declararmos um parâmetro para a nossa função, classe ou interface. Esse tipo poderá ser indicado no momento do uso da função através de `<Tipo>`.
+
+```typescript
+const numer = [1, 2, 3, 4, 5, 6, 7];
+const frut = ['Banana', 'Maça', 'Uva', 'Goiaba', 'Abacaxi', 'Pinha'];
+  
+function firstFive<T>(list: T[]): T[] {
+    return list.slice(0, 5);
+}
+
+console.log(firstFive(numer));
+console.log(firstFive(frut));
+```
+
+15
+
+15.1 - É possível indicar que o tipo genérico deve herdar de uma interface específica com o `extends`.
+
+```typescript
+function extractText<T extends HTMLElement>(el: T)  {
+    return {
+        texto: el.innerText,
+        el,
+    };
+}
+
+const link = document.querySelector("a");
+
+if (link) {
+    console.log(extractText(link).el);
+}
+```
+
+Ou também pode definir direto no estancia.
+
+```typescript
+function $<Tipo extends Element>(selector: string): Tipo | null {
+    return document.querySelector(selector);
+}
+
+const link = $<HTMLAnchorElement>('a')?.href;
+```
+
+15.2 - Métodos nativos são definidos utlizando generics, assim podemos indicar durante a execução qual será o tipo esperado.
+
+```typescript
+function $<Tipo extends Element>(selector: string): Tipo | null {
+    return document.querySelector(selector);
+}
+
+const link = $<HTMLAnchorElement>('a')?.href;
+```
+
