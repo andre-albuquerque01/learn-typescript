@@ -5,6 +5,7 @@
 2 - O TypeScript ajuda a resolver o problema de DX, experience development, pois ao recomendar como será o retorno ou o tipo, fica mais fácil prever quais serão as funções.
 
 3
+
 3.1 - Para instalar globalmente o TypeScript, utilize o comando `npm i -g typescript`. Se estiver no Linux e der erro de permissão, basta usar o comando `sudo npm i -g typescript`. Para verificar a instalação, digite `tsc` no terminal. Se aparecerem os comandos do TypeScript, significa que a instalação foi bem-sucedida.
 
 3.2 - Para compilar um arquivo `.ts` para JavaScript, utilize o seguinte comando: `tsc script.ts`. Isso criará um novo arquivo `script.js`. Para compilar automaticamente sempre que houver uma alteração, use os comandos `tsc` e `tsc -w` no terminal.
@@ -22,6 +23,7 @@ console.log(typeof frase);
 ```
 
 6
+
 6.1 - Union Types, é comum ter funções que podem retornar ou receber tipo diferentes. Para isso se utiliza a barra vertical `string | number | boolean`.  
 
 ```typescript
@@ -35,13 +37,14 @@ console.log(numero);
 
 ```typescript
 // Retorna HTMLButtonElement
-const btn = document.querySelector('.btn');
+const btn = document.querySelector('button');
 // Optional chaining
 // Executa click() se button for diferente de null/ undefined
 btn?.click();
 ```
 
 7
+
 7.1 - Object, é possível definir a forma (shape) de um objeto usando uma sintaxe parecida com a de criação de objetos : {}
 
 ```typescript
@@ -110,6 +113,7 @@ dados({
 ```
 
 8
+
 8.1 - Um array é definido com o tipo de dado(s) que ele possui, seguido por []
 
 ```typescript
@@ -133,10 +137,11 @@ function maiorQue(data: Array<number>){
 9 - O `any` indica que o dado pode conter qualquer tipo de dado do typescript. Se deve evitar o máximo o uso do `any`, pois o mesmo remove todas as seguranças e conveniências que o TS fornece. Porém, em alguns casos o `any` faz sentido, como no caso da função `json()` onde qualquer tipo de dados pode ser retornado, dependendo da API que acessamos.
 
 10
+
 10.1 - `null` é um tipo primitivo que representa a ausência de valor. É comum em funções do DOM que fazem uma busca, retornarem null quando não são bem sucedidas.
 
 ```typescript
-const btn = document.querySelector('.btn');
+const btn = document.querySelector('button');
 if(btn !==){
     btn.click();
 }
@@ -164,4 +169,157 @@ const game: Product = {
 game.category?.toLowerCase();
 livro.category?.toLowerCase();
 
+```
+
+11
+
+11.1 - Em javascript Classe `class` são funções construtoras que geram objetos. Quando define uma classe, o typescript gera a interface do objeto produzido pela mesma.
+
+```typescript
+class Produto {
+    nome: string;
+    tamanho: number;
+
+    constructor(nome: string, tamanho: number) {
+        this.nome = nome;
+        this.tamanho = tamanho;
+    }
+
+    realName() {
+        return `O nome verdadeiro é ${this.nome}`;
+     }
+}
+
+const book = new Produto('Brasil melhor', 15);
+
+console.log(book.nome);
+console.log(book.tamanho);
+console.log(book.realName());
+```
+
+11.2 - Existem funções que retornam diferentes tipos de objetos. Com a palavra chave `instanceof` podemos verificar se um objeto é uma instância (foi constuída ou herda) de uma função construtora (class).
+
+```typescript
+class Produto {
+    nome: string;
+    tamanho: number;
+
+    constructor(nome: string, tamanho: number) {
+        this.nome = nome;
+        this.tamanho = tamanho;
+    }
+
+    realName() {
+        return `O nome verdadeiro é ${this.nome}`;
+     }
+}
+
+const book = new Produto('Brasil melhor', 15);
+
+
+console.log(book instanceof Produto);
+// true
+```
+
+Tamém pode fazer da seguinte maneira:
+
+```typescript
+class Book {
+    autor: string;
+
+    constructor(autor: string) {
+        this.autor = autor
+    }
+}
+
+class Gamer {
+    players: number;
+
+    constructor(players: number) {
+        this.players = players;
+    }
+}
+
+function searchProduct(search: string) {
+    if (search === 'Evangelho')
+        return new Book('Mateus, Marcos, Lucas e João')
+    if (search === 'PES')
+        return new Gamer(4);
+    return null;
+}
+
+const produto = searchProduct('Evangelho')
+
+// Dar erro ao tentar acessar sem se for instacia de console.log(produto.autor);
+
+// Ao fazer essa verificação, permite que acesse a instacia da class
+if (produto instanceof Book)
+    console.log(produto.autor);
+if (produto instanceof Gamer)
+    console.log(produto.players);
+
+```
+
+11.3 - O `instanceof` verifica se a função construtora herda de outra (extends). O `instanceof` é um operador que existe no Javascript. Se definir a interface de um objeto apenas com a `interface` e não possuir uma classe construtora do mesmo, não será possível utilizar o `instanceof` na interface.
+
+```typescript
+class Produto {
+    nome: string;
+
+    constructor(nome: string) {
+        this.nome = nome;
+    }
+}
+
+class Book extends Produto {
+    autor: string;
+
+    constructor(nome: string, autor: string) {
+        super(nome)
+        this.autor = autor
+    }
+}
+
+class Gamer extends Produto {
+    players: number;
+
+    constructor(nome: string, players: number) {
+        super(nome)
+        this.players = players;
+    }
+}
+
+function searchProduct(search: string) {
+    if (search === 'Evangelho')
+        return new Book('Biblia', 'Mateus, Marcos, Lucas e João')
+    if (search === 'PES')
+        return new Gamer('PES', 4);
+    return null;
+}
+
+const produto = searchProduct('Evangelho')
+
+if (produto instanceof Book)
+    console.log(produto.autor);
+if (produto instanceof Gamer) {
+    console.log(produto.nome);
+    console.log(produto.players);
+}
+
+if (produto instanceof Produto)
+    console.log(produto.nome );
+
+```
+
+```typescript
+interface Moto {
+    nome: string
+}
+
+const honda: Moto = {
+    nome: 'Yamaha '
+}
+
+console.log(honda instanceof Moto);
+// Moto is not defined, erro pois está utilizando função do JS em TS.
 ```
