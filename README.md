@@ -606,3 +606,73 @@ console.log(typeGuard(200));
 console.log(typeGuard('3330'));
 console.log(typeGuard(document.body));
 ```
+
+19 - Array, Type Predicate
+
+19.1 - Um array não pode ser verificada com o `typeof` pois a mesma é um `object`. Podemos verificar se o dado é `instanceof Array` ou podemos usar a função `Array.isArray()`.
+
+```typescript
+async function fetchCursos() {
+    const response = await fetch('https://api.origamid.dev/json/cursos.json');
+    const json = await response.json();
+    handleCursos(json);
+}
+fetchCursos();
+
+function handleCursos(data: unknown) {
+    if (data instanceof Array) {
+        console.log('É instâcia de Array');
+    }
+
+    if (Array.isArray(data)) {
+        console.log('É Array');
+    }
+}
+```
+
+19.2 - Ts não executa Js. Sabe-se já que o TS não executa o Js durante a checagem dos tipos. Se isso ocorre, então como a função `isArray` consege ser usada com Type Guard? Com o Type Predicate `:arg is type`, podemos indicar qual o tipo de argumento uma função booleana (que retorna boolean) recebeu para ser verdadeira.
+
+```typescript
+function isString(value: unknown) : value is string {
+    return typeof value === 'string';
+}
+
+function handleData(data: unknown) {
+    if (isString(data)) {
+        return data.toLowerCase();
+    }
+
+}
+```
+
+20 - Objetos
+
+20.1 - O Type Predicate pode ser especialmente utilizado para criarmos Type Guards para objetos específicos e garantirmos a Type Safety (segurança) do projeto.
+
+```typescript
+async function fetchProduct() {
+    const response = await fetch('https://api.origamid.dev/json/notebook.json');
+    const json = await response.json();
+    handleProcut(json);
+}
+fetchProduct();
+
+interface Produto {
+    nome: string;
+    preco: number;
+}
+
+function isProduto(value: unknown): value is Produto {
+    if (value && typeof value === 'object' && "nome" in value && "preco" in value) {
+        return true;
+    }
+    return false;
+}
+
+function handleProcut(data: unknown) {
+    if (isProduto(data)) {
+        if (typeof data.nome === 'string')
+            console.log(data.nome);
+    }
+}
+```

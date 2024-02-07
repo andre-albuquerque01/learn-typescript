@@ -296,17 +296,73 @@
 
 // 18
 
-function typeGuard(value: unknown) {
-    if (typeof value === 'string')
-        return value.toLowerCase();
+// function typeGuard(value: unknown) {
+//     if (typeof value === 'string')
+//         return value.toLowerCase();
 
-    if (typeof value === 'number')
-        return value.toFixed();
+//     if (typeof value === 'number')
+//         return value.toFixed();
 
-    if (value instanceof HTMLElement)
-        return value.innerText;
-}
-console.log(typeGuard(200));
-console.log(typeGuard('3330'));
-console.log(typeGuard(document.body));
+//     if (value instanceof HTMLElement)
+//         return value.innerText;
+// }
+// console.log(typeGuard(200));
+// console.log(typeGuard('3330'));
+// console.log(typeGuard(document.body));
 
+// 19
+// async function fetchCursos() {
+//     const response = await fetch('https://api.origamid.dev/json/cursos.json');
+//     const json = await response.json();
+//     handleCursos(json);
+// }
+// fetchCursos();
+
+// function handleCursos(data: unknown) {
+//     if (data instanceof Array) {
+//         console.log('É instâcia de Array');
+//     }
+
+//     if (Array.isArray(data)) {
+//         console.log('É Array');
+//     }
+// }
+
+// function isString(value: unknown) : value is string {
+//     return typeof value === 'string';
+// }
+
+// function handleData(data: unknown) {
+//     if (isString(data)) {
+//         return data.toLowerCase();
+//     }
+
+// }
+
+// 20
+
+// async function fetchProduct() {
+//     const response = await fetch('https://api.origamid.dev/json/notebook.json');
+//     const json = await response.json();
+//     handleProcut(json);
+// }
+// fetchProduct();
+
+// interface Produto {
+//     nome: string;
+//     preco: number;
+// }
+
+// function isProduto(value: unknown): value is Produto {
+//     if (value && typeof value === 'object' && "nome" in value && "preco" in value) {
+//         return true;
+//     }
+//     return false;
+// }
+
+// function handleProcut(data: unknown) {
+//     if (isProduto(data)) {
+//         if (typeof data.nome === 'string')
+//             console.log(data.nome);
+//     }
+// }
