@@ -676,3 +676,55 @@ function handleProcut(data: unknown) {
     }
 }
 ```
+
+21 - As
+
+21.1 - Com o Type Assertion é possível "indicar" ao Ts qual o tipo de dado esperado com a palavra-chave `as`. Só é possível indicar tipo que possuam relação com o tipo original. Evitar ao máximo o uso de Type Assertion, pois a segurança (Type Safety) é perdida quano indicamos algo que nem sempre será verdade.
+
+```typescript
+const video = document.querySelector('.player') as HTMLVideoElement;
+// erro runtime, não existe volume de null
+video.volume;
+
+// erro TS, possíveis dados devem ser compatíveis com Element | null
+const link = document.querySelector('.link') as string;
+```
+
+21.2 - Podemos user o Type Assertion para definir que um tipo `any` é qualquer tipo de dado possível.
+
+```typescript
+interface Produto {
+    nome: string;
+    preco: number;
+}
+
+async function fetchProduct() {
+    const response = await fetch('https://api.origamid.dev/json/notebook.json');
+    return response.json() as Promise<Produto>;
+}
+
+// Podemos usar o as em diferentes locais
+async function handleProduto() {
+    const produto = await fetchProduct();
+    produto.nome
+}
+
+handleProduto()
+```
+
+21.3 - Indica que não existe a possibilidade do dado ser null. Cuidado com o uso, pois pode levar a erros no runtime. Use apenas se tiver certeza. Esse é um operador de TS `!.` e não de JS como o `?.`. Durante a compilação ele será removido.
+
+```typescript
+const video = document.querySelector('video')!;
+// erro runtime, não existe volume de null
+video.volume;
+
+// erro runtime
+document.querySelector('a')!.href = "https://www.google.com"
+
+const video1 = document.querySelector('.player') as HTMLVideoElement;
+const video2 = <HTMLVideoElement>document.querySelector(".player");
+const video3 = document.querySelector<HTMLVideoElement>(".player");
+const video4 = document.querySelector(".player");
+(video4 as HTMLVideoElement).volume
+```

@@ -366,3 +366,42 @@
 //             console.log(data.nome);
 //     }
 // }
+
+// 21
+// const video = document.querySelector('.player') as HTMLVideoElement;
+// // erro runtime, não existe volume de null
+// video.volume;
+
+// // erro TS, possíveis dados devem ser compatíveis com Element | null
+// const link = document.querySelector('.link') as string;
+
+// interface Produto {
+//     nome: string;
+//     preco: number;
+// }
+
+// async function fetchProduct() {
+//     const response = await fetch('https://api.origamid.dev/json/notebook.json');
+//     return response.json() as Promise<Produto>;
+// }
+
+// // Podemos usar o as em diferentes locais
+// async function handleProduto() {
+//     const produto = await fetchProduct();
+//     produto.nome
+// }
+
+// handleProduto()
+
+// const video = document.querySelector('video')!;
+// erro runtime, não existe volume de null
+// video.volume;
+
+// erro runtime
+// document.querySelector('a')!.href = "https://www.google.com"
+
+const video1 = document.querySelector('.player') as HTMLVideoElement;
+const video2 = <HTMLVideoElement>document.querySelector(".player");
+const video3 = document.querySelector<HTMLVideoElement>(".player");
+const video4 = document.querySelector(".player");
+(video4 as HTMLVideoElement).volume
