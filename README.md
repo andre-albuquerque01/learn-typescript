@@ -324,7 +324,7 @@ console.log(honda instanceof Moto);
 // Moto is not defined, erro pois está utilizando função do JS em TS.
 ```
 
-12
+12 - querySelector
 
 12.1 - Quando selecionamos um elemento do DOM com o `querySelector`, o objeto retornado dependerá da string que passarmos no método.
 
@@ -353,7 +353,7 @@ links.forEach((link) => {
 })
 ```
 
-13
+13 - Callback
 
 13.1 - Passa o evento como uma string e uma função de callback no método `addEventListener`. A função de callback possui um parâmetro que faz referência ao evento executado.
 
@@ -431,7 +431,7 @@ console.log(firstFive(numer));
 console.log(firstFive(frut));
 ```
 
-15
+15 - Tipos
 
 15.1 - É possível indicar que o tipo genérico deve herdar de uma interface específica com o `extends`.
 
@@ -470,7 +470,7 @@ function $<Tipo extends Element>(selector: string): Tipo | null {
 const link = $<HTMLAnchorElement>('a')?.href;
 ```
 
-16
+16 - Tipos de retorno
 
 16.1 - A interface de um função é definida durante a sua declaração
 
@@ -498,4 +498,111 @@ function pintarTela(cor: string): void {
 console.log(pintarTela('black'));
 ```
 
-Continua na #F29
+16.3 - O `never` é utilizado em casos onde a função gera um erro ou termina a aplicação.
+
+```typescript
+function abort(msg: string): never {
+    throw new Error(msg);
+}
+abort('Ocorreu um erro')
+// Não irá apresentar o console.log, pois apresentara o erro e vai travar.
+console.log('Tente novamente');
+```
+
+16.4 - Na definição de interfaces podemos definir os métodos indicando o tipo de dado recebido e o seu possível retorno.
+
+```typescript
+interface Quadrado {
+    lado: number;
+    perimetro(lado: number): number
+}
+
+function calcular(forma: Quadrado) {
+    forma.perimetro(3);
+}
+```
+
+16.5 - Existem funções que retornam diferentes dados dependendo do argumento. Pode declarar a interface dessas funções utilizando function overload. Basta declarar a interface antes da definição da mesma, utilizando o mesmo nome. O Overload deve ser compatível com a função original.
+
+```typescript
+function normalizar(valor: string[]): string[] (+1 overload)
+
+function normalizar(valor: string): string; 
+function normalizar(valor: string[]): string[]; 
+function normalizar(valor: string | string[]): string | string[] {
+    if (typeof valor === 'string')
+        return valor.trim().toLocaleLowerCase();
+    else return valor.map(item => item.trim().toLocaleLowerCase());
+}
+
+const valor = normalizar(' Produt  ').toUpperCase()
+const valor1 = normalizar(['Santos', 'São Paulo', 'Palmeiras']).length
+console.log(valor);
+console.log(valor1);
+```
+
+17 - Guard, Safety e Narrowing
+
+17.1 - O Type Guard (defesa) garanye a Type Safety (segurança) do dado dentro do bloco condicional. Esse processo é chamado de Type Narrowing (estreitamento). O Ts faz o Control Flow (controle de fluxo) para entender qual o dado dentro da condicional.
+
+```typescript
+function typeGuard(value: any) {
+    if (typeof value === 'string')
+        return value.toLowerCase();
+
+    if (typeof value === 'number')
+        return value.toFixed();
+
+    if (value instanceof HTMLElement)
+        return value.innerText;
+}
+typeGuard(200);
+typeGuard('3330');
+typeGuard(document.body);
+```
+
+17.2 - O operador `in` verifica se o objeto possui uma propriedade com o mesmo nome da string comparada `"propriedade" in obj`.
+
+```typescript
+const obj = {
+    nome: 'Objeto'
+}
+
+if ('nome' in obj) console.log(`tem o nome sim e o nome é: ${obj.nome}`);
+
+interface Produto {
+    nome: string;
+    preco: number;
+}
+
+function handleProducto(data: Produto) {
+    if ('preco' in data) {
+        document.body.innerHTML += `
+        <p>Nome: ${data.nome}</p>
+        <p>Preço: R$ ${data.preco}</p>
+        `
+    }
+}
+
+handleProducto({nome: 'Casa', preco: 550});
+```
+
+18 - Unknown
+
+18.1 - Indica que não sabemos o tipo de dados que pode ser passado. Diferente do any, o unknown só irá permitir o uso de métodos quando o Type Safety estiver garantida.
+
+```typescript
+function typeGuard(value: unknown) {
+    if (typeof value === 'string')
+        return value.toLowerCase();
+
+    if (typeof value === 'number')
+        return value.toFixed();
+
+    if (value instanceof HTMLElement)
+        return value.innerText;
+}
+console.log(typeGuard(200));
+console.log(typeGuard('3330'));
+console.log(typeGuard(document.body));
+```

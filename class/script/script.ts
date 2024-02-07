@@ -220,10 +220,93 @@
 
 // subtrair(4, 10);
 
-type Callback = (e: MouseEvent) => void;
+// type Callback = (e: MouseEvent) => void;
 
-function pintarTela(cor: string): void {
-    document.body.style.background = cor
+// function pintarTela(cor: string): void {
+//     document.body.style.background = cor
+// }
+
+// console.log(pintarTela('black'));
+
+// function abort(msg: string): never {
+//     throw new Error(msg);
+// }
+// abort('Ocorreu um erro')
+// console.log('Tente novamente');
+
+// interface Quadrado {
+//     lado: number;
+//     perimetro(lado: number): number
+// }
+
+// function calcular(forma: Quadrado) {
+//     forma.perimetro(3);
+// }
+
+// function normalizar(valor: string): string;
+// function normalizar(valor: string[]): string[];
+// function normalizar(valor: string | string[]): string | string[] {
+//     if (typeof valor === 'string')
+//         return valor.trim().toLocaleLowerCase();
+//     else return valor.map(item => item.trim().toLocaleLowerCase());
+// }
+
+// const valor = normalizar(' Produt  ').toUpperCase()
+// const valor1 = normalizar(['Santos', 'São Paulo', 'Palmeiras']).length
+// console.log(valor);
+// console.log(valor1);
+
+
+// 17
+// function typeGuard(value: any) {
+//     if (typeof value === 'string')
+//         return value.toLowerCase();
+
+//     if (typeof value === 'number')
+//         return value.toFixed();
+
+//     if (value instanceof HTMLElement)
+//         return value.innerText;
+// }
+// typeGuard(200);
+// typeGuard('3330');
+// typeGuard(document.body);
+
+// const obj = {
+//     nome: 'Objeto'
+// }
+
+// if ('nome' in obj) console.log(`tem o nome sim e o nome é: ${obj.nome}`);
+
+// interface Produto {
+//     nome: string;
+//     preco: number;
+// }
+
+// function handleProducto(data: Produto) {
+//     if ('preco' in data) {
+//         document.body.innerHTML += `
+//         <p>Nome: ${data.nome}</p>
+//         <p>Preço: R$ ${data.preco}</p>
+//         `
+//     }
+// }
+
+// handleProducto({nome: 'Casa', preco: 550});
+
+// 18
+
+function typeGuard(value: unknown) {
+    if (typeof value === 'string')
+        return value.toLowerCase();
+
+    if (typeof value === 'number')
+        return value.toFixed();
+
+    if (value instanceof HTMLElement)
+        return value.innerText;
 }
+console.log(typeGuard(200));
+console.log(typeGuard('3330'));
+console.log(typeGuard(document.body));
 
-console.log(pintarTela('black'));
