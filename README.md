@@ -470,3 +470,32 @@ function $<Tipo extends Element>(selector: string): Tipo | null {
 const link = $<HTMLAnchorElement>('a')?.href;
 ```
 
+16
+
+16.1 - A interface de um função é definida durante a sua declaração
+
+```typescript
+function somar(n1: number, n2: number, n3?: number): number {
+    return n1 + n2 + (n3 ? n3 : 0);
+}
+
+somar(3, 4, 5);
+
+const subtrair = (n1: number, n2: number): number => n1 - n2;
+
+subtrair(4, 10);
+```
+
+16.2 - No Js, uma função sem return irá retornar `undefined`. No Ts o retorno é definido como `void`. Isso evita usos errados como checagens booleanas de métodos que não possuem retorno.
+
+```typescript
+type Callback = (e: MouseEvent) => void;
+
+function pintarTela(cor: string): void {
+    document.body.style.background = cor
+}
+
+console.log(pintarTela('black'));
+```
+
+Continua na #F29

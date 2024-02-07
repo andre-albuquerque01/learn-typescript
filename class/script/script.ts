@@ -205,6 +205,25 @@
 
 // const link = $<HTMLAnchorElement>('a')?.href;
 
-const link = document.querySelector<HTMLAnchorElement>(".link");
+// const link = document.querySelector<HTMLAnchorElement>(".link");
 
-console.log(link?.href);
+// console.log(link?.href);
+
+// 16
+// function somar(n1: number, n2: number, n3?: number): number {
+//     return n1 + n2 + (n3 ? n3 : 0);
+// }
+
+// somar(3, 4, 5);
+
+// const subtrair = (n1: number, n2: number): number => n1 - n2;
+
+// subtrair(4, 10);
+
+type Callback = (e: MouseEvent) => void;
+
+function pintarTela(cor: string): void {
+    document.body.style.background = cor
+}
+
+console.log(pintarTela('black'));
