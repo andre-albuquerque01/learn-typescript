@@ -728,3 +728,107 @@ const video3 = document.querySelector<HTMLVideoElement>(".player");
 const video4 = document.querySelector(".player");
 (video4 as HTMLVideoElement).volume
 ```
+
+22 - Destructuring
+
+22.1 - Durante a desestruturação de objetos, podemos indicar o tipo de dado com a sintaxe: `{key1, key2}: {key1: type1; key2: type2;}`
+
+```typescript
+const { body }: { body: HTMLElement } = document;
+
+interface Produto {
+    nome: string;
+    preco?: number
+}
+
+function handleData({ nome, preco }: Produto) {
+    nome.includes('book');
+    preco?.toFixed();
+}
+
+handleData({
+    nome: "Notebook",
+    preco: 2110
+});
+```
+
+22.2 - Durante a desestruturação é necessário indicar o tipo exato do dado esperado pelo Ts. Ex: um currentTarget pode ser `EventTarget | null`.
+
+```typescript
+function handleClick({ currentTarget, pageX }: { currentTarget: EventTarget | null; pageX: number }) {
+    if (currentTarget instanceof HTMLElement)
+        currentTarget.innerHTML = `<h1>Mouse click em x: ${pageX}</h1>`;
+    console.log(pageX);
+}
+
+function handleClick1({ currentTarget, pageX }: MouseEvent) {
+    if (currentTarget instanceof HTMLElement)
+        currentTarget.innerHTML = `<h1>Mouse click em x: ${pageX}</h1>`;
+    console.log(pageX);
+}
+
+document.documentElement.addEventListener('click', handleClick)
+document.documentElement.addEventListener('click', handleClick1)
+```
+
+22.3 - O operador `...rest` retorna um Array.
+
+```typescript
+function comparar(tipo: "menor" | "maior", ...numero: number[]) {
+    if (tipo === 'menor')
+        return Math.min(...numero)
+    if (tipo === 'maior')
+        return Math.max(...numero)
+}
+
+comparar('menor', 1, 2, 3, 4, 5, 6, 7, 8, 9)
+```
+
+22.4 - Intersection. Funciona em parte como o `extends` para interfaces, mas pode ser utilizado em Types.
+
+```typescript
+type Produto = {
+    preco: number;
+};
+
+type Carro = {
+    rodas: number;
+    portas: number;
+};
+
+function handleProductoCarro(dados: Produto & Carro){
+    dados.rodas;
+    dados.portas;
+    dados.preco;
+}
+```
+
+22.5 - Adicionar propriedades. É possível adicionar uma propriedade a uma interface/tipo que já definido.
+
+```typescript
+type TipoCarro = {
+    rodas: number;
+    portas: number;
+}
+
+type TipoCarroComPreco = TipoCarro & {
+    preco: number;
+}
+
+interface InterfaceCarro {
+    rodas: number;
+    portas: number;
+}
+
+interface InterfaceCarro {
+    preco: number;
+}
+
+function handleInterfaceCarro(carro: InterfaceCarro){}
+
+interface Window {
+    userId: number;
+}
+
+window.userId = 100;  
+```

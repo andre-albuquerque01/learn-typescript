@@ -400,8 +400,91 @@
 // erro runtime
 // document.querySelector('a')!.href = "https://www.google.com"
 
-const video1 = document.querySelector('.player') as HTMLVideoElement;
-const video2 = <HTMLVideoElement>document.querySelector(".player");
-const video3 = document.querySelector<HTMLVideoElement>(".player");
-const video4 = document.querySelector(".player");
-(video4 as HTMLVideoElement).volume
+// const video1 = document.querySelector('.player') as HTMLVideoElement;
+// const video2 = <HTMLVideoElement>document.querySelector(".player");
+// const video3 = document.querySelector<HTMLVideoElement>(".player");
+// const video4 = document.querySelector(".player");
+// (video4 as HTMLVideoElement).volume
+
+// 22
+// const { body }: { body: HTMLElement } = document;
+
+// interface Produto {
+//     nome: string;
+//     preco?: number
+// }
+
+// function handleData({ nome, preco }: Produto) {
+//     nome.includes('book');
+//     preco?.toFixed();
+// }
+
+// handleData({
+//     nome: "Notebook",
+//     preco: 2110
+// });
+
+// function handleClick({ currentTarget, pageX }: { currentTarget: EventTarget | null; pageX: number }) {
+//     if (currentTarget instanceof HTMLElement)
+//         currentTarget.innerHTML = `<h1>Mouse click em x: ${pageX}</h1>`;
+//     console.log(pageX);
+// }
+
+// function handleClick1({ currentTarget, pageX }: MouseEvent) {
+//     if (currentTarget instanceof HTMLElement)
+//         currentTarget.innerHTML = `<h1>Mouse click em x: ${pageX}</h1>`;
+//     console.log(pageX);
+// }
+
+// document.documentElement.addEventListener('click', handleClick)
+// document.documentElement.addEventListener('click', handleClick1)
+
+// function comparar(tipo: "menor" | "maior", ...numero: number[]) {
+//     if (tipo === 'menor')
+//         return Math.min(...numero)
+//     if (tipo === 'maior')
+//         return Math.max(...numero)
+// }
+
+// comparar('menor', 1, 2, 3, 4, 5, 6, 7, 8, 9)
+
+// type Produto = {
+//     preco: number;
+// };
+
+// type Carro = {
+//     rodas: number;
+//     portas: number;
+// };
+
+// function handleProductoCarro(dados: Produto & Carro){
+//     dados.rodas;
+//     dados.portas;
+//     dados.preco;
+// }
+
+type TipoCarro = {
+    rodas: number;
+    portas: number;
+}
+
+type TipoCarroComPreco = TipoCarro & {
+    preco: number;
+}
+
+interface InterfaceCarro {
+    rodas: number;
+    portas: number;
+}
+
+interface InterfaceCarro {
+    preco: number;
+}
+
+function handleInterfaceCarro(carro: InterfaceCarro){}
+
+interface Window {
+    userId: number;
+}
+
+window.userId = 100;  
