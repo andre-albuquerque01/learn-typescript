@@ -570,40 +570,131 @@
 
 // selecionar("a")
 
-async function fetchData<T>(url: string): Promise<T> {
-    const base = 'https://api.origamid.dev/json';
-    const response = await fetch(base + url);
-    return await response.json();
+// async function fetchData<T>(url: string): Promise<T> {
+//     const base = 'https://api.origamid.dev/json';
+//     const response = await fetch(base + url);
+//     return await response.json();
+// }
+
+// interface Jogo {
+//     nome: string;
+//     ano: number;
+//     desenvolvedora: string;
+//     plataformas: string[];
+// }
+
+// interface Livro {
+//     nome: string;
+//     ano: number;
+//     autor: string;
+//     paginas: number;
+// }
+
+// function checkInterface<T>(obj: unknown, key: keyof T): obj is T {
+//     if (obj && typeof obj === 'object' && key in obj)
+//         return true
+//     return false
+// }
+
+// async function handleData() {
+//     const jogo = await fetchData("/jogo.json");
+//     if (checkInterface<Jogo>(jogo, 'desenvolvedora'))
+//         console.log(jogo.desenvolvedora);
+
+//     const livro = await fetchData("/livro.json");
+//     if (checkInterface<Livro>(livro, 'autor'))
+//         console.log(livro);
+// }
+
+// handleData();
+
+// 25
+// interface Produto {
+//     nome: string;
+//     quantidade: number;
+// }
+
+// const produto1 = {
+//     nome: 'PC Gamer',
+//     quantidade: 15,
+//     cor: 'black'
+// }
+
+// const produto2 = {
+//     nome: 'PC Gamer',
+//     quantidade: 15,
+//     freezer: true,
+// }
+
+// const servico1 = {
+//     nome: "Instalação";
+// }
+
+// function mostrarQuantidade(produto: Produto){
+//     console.log(produto.quantidade + 20);
+// }
+
+// mostrarQuantidade(produto1)
+// mostrarQuantidade(produto2)
+
+
+// interface Produto {
+//     nome: string;
+//     quantidade: number;
+// }
+
+// const produto1 = {
+//     nome: 'PC Gamer',
+//     quantidade: 15,
+//     cor: 'black'
+// }
+
+// const produto2 = {
+//     nome: 'PC Gamer',
+//     quantidade: 15,
+//     freezer: true,
+// }
+
+// const servico1 = {
+//     nome: "Instalação",
+// }
+
+// // Esse Partial fica opcional os parametos de PRODUTO.
+// function mostrarQuantidadePartial(produto: Partial<Produto>) {
+//     if (produto.quantidade)
+//         console.log(produto.quantidade + 20);
+// }
+
+// mostrarQuantidadePartial(produto1)
+// mostrarQuantidadePartial(produto2)
+// mostrarQuantidadePartial(servico1)
+
+// interface Post {
+//     titulo: string;
+//     visualizacoes: number;
+//     tags: string[];
+//     [key: string]: unknown;
+// }
+
+// const artigo: Post = {
+//     titulo: 'How? tanatanatana',
+//     visualizacoes: 2500,
+//     tags: ['Brasil', 'Acima', 'De', 'Todos', 'E', 'Deus', 'Acima', 'De', 'Tudo.'],
+//     autor: 'Brasil',
+// }
+
+interface ObjetoLiteral {
+    [key: string]: unknown;
 }
 
-interface Jogo {
-    nome: string;
-    ano: number;
-    desenvolvedora: string;
-    plataformas: string[];
+// type ObjetoLiteral2 = Record<string, string>
+type ObjetoLiteral2 = Record<'titulo', string>
+
+function mostrarTitulo(obj: ObjetoLiteral2) {
+    if (obj && typeof obj === 'object' && 'titulo' in obj) {
+        console.log(obj.titulo);
+
+    }
 }
 
-interface Livro {
-    nome: string;
-    ano: number;
-    autor: string;
-    paginas: number;
-}
-
-function checkInterface<T>(obj: unknown, key: keyof T): obj is T {
-    if (obj && typeof obj === 'object' && key in obj)
-        return true
-    return false
-}
-
-async function handleData() {
-    const jogo = await fetchData("/jogo.json");
-    if (checkInterface<Jogo>(jogo, 'desenvolvedora'))
-        console.log(jogo.desenvolvedora);
-
-    const livro = await fetchData("/livro.json");
-    if (checkInterface<Livro>(livro, 'autor'))
-        console.log(livro);
-}
-
-handleData();
+mostrarTitulo({ titulo: 'AAA' })

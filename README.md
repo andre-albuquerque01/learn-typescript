@@ -980,3 +980,109 @@ async function handleData() {
 handleData();
 ```
 
+25 - Objetos
+
+25.1 - Duck Typing - Um objeto quando passado em uma função, pode conter propriedades e métodos além dos declarados na interface.
+
+```typescript
+interface Produto {
+    nome: string;
+    quantidade: number;
+}
+
+const produto1 = {
+    nome: 'PC Gamer',
+    quantidade: 15,
+    cor: 'black'
+}
+
+const produto2 = {
+    nome: 'PC Gamer',
+    quantidade: 15,
+    freezer: true,
+}
+
+const servico1 = {
+    nome: "Instalação";
+}
+
+function mostrarQuantidade(produto: Produto){
+    console.log(produto.quantidade + 20);
+}
+
+mostrarQuantidade(produto1)
+mostrarQuantidade(produto2)
+```
+
+25.2 - Partial. O Ts conta com `utility types`, tipos que podem ser utilizados como funções para a definição de novos tipo. Com o `Partial<Tipo>`, podemos indicar que todas as propriedades da interface passada em Tipo, são opcionais.
+
+```typescript
+interface Produto {
+    nome: string;
+    quantidade: number;
+}
+
+const produto1 = {
+    nome: 'PC Gamer',
+    quantidade: 15,
+    cor: 'black'
+}
+
+const produto2 = {
+    nome: 'PC Gamer',
+    quantidade: 15,
+    freezer: true,
+}
+
+const servico1 = {
+    nome: "Instalação",
+}
+
+// Esse Partial fica opcional os parametos de PRODUTO.
+function mostrarQuantidadePartial(produto: Partial<Produto>) {
+    if (produto.quantidade)
+        console.log(produto.quantidade + 20);
+}
+
+mostrarQuantidadePartial(produto1)
+mostrarQuantidadePartial(produto2)
+mostrarQuantidadePartial(servico1)
+```
+
+25.3 - [key:string]:unknow;. Pode definir que um objeto poderá conter propriedades/métodos além dos que foram definidos inicialmente.
+
+```typescript
+interface Post {
+    titulo: string;
+    visualizacoes: number;
+    tags: string[];
+    [key: string]: unknown;
+}
+
+const artigo: Post = {
+    titulo: 'How? tanatanatana',
+    visualizacoes: 2500,
+    tags: ['Brasil', 'Acima', 'De', 'Todos', 'E', 'Deus', 'Acima', 'De', 'Tudo.'],
+    autor: 'Brasil',
+}
+```
+
+25.4 - O Record define a interface de um Objeto que possui `<chave, tipo>`. Pode ser usado para definir a interface de um Objeto Literal genérico.
+
+```typescript
+interface ObjetoLiteral {
+    [key: string]: unknown;
+}
+
+// type ObjetoLiteral2 = Record<string, string>
+type ObjetoLiteral2 = Record<'titulo', string>
+
+function mostrarTitulo(obj: ObjetoLiteral2) {
+    if (obj && typeof obj === 'object' && 'titulo' in obj) {
+        console.log(obj.titulo);
+
+    }
+}
+
+mostrarTitulo({ titulo: 'AAA' })
+```
