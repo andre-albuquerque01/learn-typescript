@@ -890,3 +890,93 @@ function getText(selector: string) {
 
 const btn = getText("button");
 ```
+
+24 - keyof
+
+24.1 - Indica que o dado é uma chave de uma Interface/Tipo.
+
+```typescript
+interface Produto {
+    nome: string;
+    preco: number;
+}
+
+let chave: keyof Produto;
+```
+
+24.2 - O `typeof` do Js, responsável por retornar o tipo do dado. No Ts podemos utilizar ele para indicar que um dado possui o mesmo tipo que outro.
+
+```typescript
+function position(x: number, y: number) {
+    return { x, y };
+}
+
+let coordenas: typeof position;
+
+coordenas = (x: number, y: number) {
+    return { x, y };
+}
+
+coordenas(10, 26)
+```
+
+24.3 - É com o keyof que o `querySelector` consegue associar uma string com a Interface que ela retorna.
+
+```typescript
+interface Elementos {
+    a: HTMLAnchorElement;
+    video: HTMLVideoElement;
+    div: HTMLElement;
+    body: HTMLBodyElement;
+    audio: HTMLAudioElement;
+}
+
+function selecionar<K extends keyof Elementos>(selector: K): Elementos[K] | null {
+    return document.querySelector(selector)
+}
+
+selecionar("a")
+```
+
+24.5 - O `keyof` pode ser utilizado para criarmos funções genéericas utilitárias.
+
+```typescript
+async function fetchData<T>(url: string): Promise<T> {
+    const base = 'https://api.origamid.dev/json';
+    const response = await fetch(base + url);
+    return await response.json();
+}
+
+interface Jogo {
+    nome: string;
+    ano: number;
+    desenvolvedora: string;
+    plataformas: string[];
+}
+
+interface Livro {
+    nome: string;
+    ano: number;
+    autor: string;
+    paginas: number;
+}
+
+function checkInterface<T>(obj: unknown, key: keyof T): obj is T {
+    if (obj && typeof obj === 'object' && key in obj)
+        return true
+    return false
+}
+
+async function handleData() {
+    const jogo = await fetchData("/jogo.json");
+    if (checkInterface<Jogo>(jogo, 'desenvolvedora'))
+        console.log(jogo.desenvolvedora);
+
+    const livro = await fetchData("/livro.json");
+    if (checkInterface<Livro>(livro, 'autor'))
+        console.log(livro);
+}
+
+handleData();
+```
+

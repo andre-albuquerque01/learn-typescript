@@ -402,3 +402,47 @@
 //     else return null;
 // }
 // const btn = getText("button");
+// 24
+// interface Produto {
+//     nome: string;
+//     preco: number;
+// }
+// let chave: keyof Produto;
+// function position(x: number, y: number) {
+//     return { x, y };
+// }
+// let coordenas: typeof position;
+// coordenas = (x: number, y: number) {
+//     return { x, y };
+// }
+// coordenas(10, 26)
+// interface Elementos {
+//     a: HTMLAnchorElement;
+//     video: HTMLVideoElement;
+//     div: HTMLElement;
+//     body: HTMLBodyElement;
+//     audio: HTMLAudioElement;
+// }
+// function selecionar<K extends keyof Elementos>(selector: K): Elementos[K] | null {
+//     return document.querySelector(selector)
+// }
+// selecionar("a")
+async function fetchData(url) {
+    const base = 'https://api.origamid.dev/json';
+    const response = await fetch(base + url);
+    return await response.json();
+}
+function checkInterface(obj, key) {
+    if (obj && typeof obj === 'object' && key in obj)
+        return true;
+    return false;
+}
+async function handleData() {
+    const jogo = await fetchData("/jogo.json");
+    if (checkInterface(jogo, 'desenvolvedora'))
+        console.log(jogo.desenvolvedora);
+    const livro = await fetchData("/livro.json");
+    if (checkInterface(livro, 'autor'))
+        console.log(livro);
+}
+handleData();
