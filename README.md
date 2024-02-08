@@ -832,3 +832,61 @@ interface Window {
 
 window.userId = 100;  
 ```
+
+23 - Classes
+
+23.1 - As classes/funções construtoras são responsáveis pela construção de objetos, como `MouseEvent`, `HTMLElement` e todos os demais.
+
+```typescript
+class Produto {
+    // Não permite alteração dentro da classe mais
+    readonly tipo = 'produto';
+    // Para acessar em outras classes que extends essa, aí terá acesso.
+    protected nome: string;
+    // Só permite acessar dentro da classe esse objeto.
+    private preco: number | undefined;
+
+    constructor(nome: string, preco?: number) {
+        this.nome = nome;
+        this.preco = preco;
+    }
+
+    getPreco() {
+        if (typeof this.preco === 'number')
+            return Produto.transformarPreco(this.preco);
+    }
+
+    static transformarPreco(preco: number) {
+        return `R$ ${preco}`
+    }
+}
+
+const livro = new Produto('Teste da vida', 255);
+console.log(livro.getPreco());
+// console.log(Produto.transformarPreco(15)); 
+```
+
+23.2 - Tuples são arrays que possuem dados em posições fixas.
+
+```typescript
+const produto1 = ['PC', 5000];
+const produto2: [string, number] = ['PC', 12000];
+
+produto2[0].toLocaleLowerCase();
+produto2[1].toFixed();
+
+const [nome, preco] = produto2;
+console.log(nome);
+```
+
+23.3 - as const. Torna um dado `readonly` e infere o tipo de dado mais específico possível. Em métodos que retornam Array's, as mesmas são transformadas em Tuples.
+
+```typescript
+function getText(selector: string) {
+    const el = document.querySelector<HTMLElement>(selector);
+    if (el) return [el, el.innerText] as const;
+    else return null;
+}
+
+const btn = getText("button");
+```

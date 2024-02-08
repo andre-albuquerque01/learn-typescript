@@ -463,28 +463,75 @@
 //     dados.preco;
 // }
 
-type TipoCarro = {
-    rodas: number;
-    portas: number;
-}
+// type TipoCarro = {
+//     rodas: number;
+//     portas: number;
+// }
 
-type TipoCarroComPreco = TipoCarro & {
-    preco: number;
-}
+// type TipoCarroComPreco = TipoCarro & {
+//     preco: number;
+// }
 
-interface InterfaceCarro {
-    rodas: number;
-    portas: number;
-}
+// interface InterfaceCarro {
+//     rodas: number;
+//     portas: number;
+// }
 
-interface InterfaceCarro {
-    preco: number;
-}
+// interface InterfaceCarro {
+//     preco: number;
+// }
 
-function handleInterfaceCarro(carro: InterfaceCarro){}
+// function handleInterfaceCarro(carro: InterfaceCarro){}
 
-interface Window {
-    userId: number;
-}
+// interface Window {
+//     userId: number;
+// }
 
-window.userId = 100;  
+// window.userId = 100;  
+
+// 23
+
+// class Produto {
+//     // Não permite alteração dentro da classe mais
+//     readonly tipo = 'produto';
+//     // Para acessar em outras classes que extends essa, aí terá acesso.
+//     protected nome: string;
+//     // Só permite acessar dentro da classe esse objeto.
+//     private preco: number | undefined;
+
+//     constructor(nome: string, preco?: number) {
+//         this.nome = nome;
+//         this.preco = preco;
+//     }
+
+//     getPreco() {
+//         if (typeof this.preco === 'number')
+//             return Produto.transformarPreco(this.preco);
+//     }
+
+//     static transformarPreco(preco: number) {
+//         return `R$ ${preco}`
+//     }
+// }
+
+// const livro = new Produto('Teste da vida', 255);
+// console.log(livro.getPreco());
+// console.log(Produto.transformarPreco(15));
+
+
+// const produto1 = ['PC', 5000];
+// const produto2: [string, number] = ['PC', 12000];
+
+// produto2[0].toLocaleLowerCase();
+// produto2[1].toFixed();
+
+// const [nome, preco] = produto2;
+// console.log(nome);
+
+// function getText(selector: string) {
+//     const el = document.querySelector<HTMLElement>(selector);
+//     if (el) return [el, el.innerText] as const;
+//     else return null;
+// }
+
+// const btn = getText("button");
