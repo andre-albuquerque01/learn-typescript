@@ -1,8 +1,4 @@
 "use strict";
-// const frase = 'Andre is better'
-function mostrarTitulo(obj) {
-    if (obj && typeof obj === 'object' && 'titulo' in obj) {
-        console.log(obj.titulo);
-    }
+function pluginSlide(selector) {
+    console.log(`Criar slide: ${selector}`);
 }
-mostrarTitulo({ titulo: 'AAA' });

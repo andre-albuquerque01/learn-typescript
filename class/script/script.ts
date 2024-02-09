@@ -683,18 +683,22 @@
 //     autor: 'Brasil',
 // }
 
-interface ObjetoLiteral {
-    [key: string]: unknown;
+// interface ObjetoLiteral {
+//     [key: string]: unknown;
+// }
+
+// // type ObjetoLiteral2 = Record<string, string>
+// type ObjetoLiteral2 = Record<'titulo', string>
+
+// function mostrarTitulo(obj: ObjetoLiteral2) {
+//     if (obj && typeof obj === 'object' && 'titulo' in obj) {
+//         console.log(obj.titulo);
+
+//     }
+// }
+
+// mostrarTitulo({ titulo: 'AAA' })
+
+function pluginSlide(selector: string) {
+    console.log(`Criar slide: ${selector}`);
 }
-
-// type ObjetoLiteral2 = Record<string, string>
-type ObjetoLiteral2 = Record<'titulo', string>
-
-function mostrarTitulo(obj: ObjetoLiteral2) {
-    if (obj && typeof obj === 'object' && 'titulo' in obj) {
-        console.log(obj.titulo);
-
-    }
-}
-
-mostrarTitulo({ titulo: 'AAA' })
