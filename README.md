@@ -1086,3 +1086,4 @@ function mostrarTitulo(obj: ObjetoLiteral2) {
 
 mostrarTitulo({ titulo: 'AAA' })
 ```
+
