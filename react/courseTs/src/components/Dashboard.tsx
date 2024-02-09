@@ -14,6 +14,12 @@ interface Faturamento {
 export const Dashboard = () => {
   const [data, setData] = useState<Faturamento[]>([]);
   const [total, setTotal] = useState<number>(0);
+  const [pagamentoCC, setPagamentoCC] = useState<number>(0);
+  const [pagamentoB, setPagamentoB] = useState<number>(0);
+  const [pg, setPg] = useState<number>(0);
+  const [rec, setRec] = useState<number>(0);
+  const [ap, setAp] = useState<number>(0);
+  const [est, setEst] = useState<number>(0);
 
   function soma() {
     let c: number = 0;
@@ -24,6 +30,43 @@ export const Dashboard = () => {
         setTotal(c)
       }
     })
+  }
+
+  function pagamento() {
+    let cd = 0;
+    let bl = 0;
+    data.forEach(elemnt => {
+      if (elemnt.formadepagamento === 'Boleto') {
+        bl++
+      } else if (elemnt.formadepagamento === 'Cartão de Crédito') {
+        cd++
+      }
+    })
+    setPagamentoB(bl)
+    setPagamentoCC(cd)
+  }
+
+  function statusPedido() {
+    let pg = 0;
+    let rec = 0;
+    let ap = 0;
+    let est = 0;
+
+    data.forEach(elemnt => {
+      if (elemnt.status === 'Paga') {
+        pg++
+      } else if (elemnt.status === 'Recusada pela operadora de cartão') {
+        rec++
+      } else if (elemnt.status === 'Aguardando pagamento') {
+        ap++
+      } else if (elemnt.status === 'Estornada') {
+        est++
+      }
+    })
+    setPg(pg);
+    setRec(rec);
+    setAp(ap);
+    setEst(est);
   }
 
   useEffect(() => {
@@ -43,17 +86,36 @@ export const Dashboard = () => {
     }
 
     fetchData();
-    soma()
   }, []);
+
+  useEffect(() => {
+    soma();
+    pagamento();
+    statusPedido();
+  });
 
   return (
     <div>
-      <h1>
+      <h1>Estatísticas</h1>
+      <hr />
+      <h3>
         Total: {total.toLocaleString('pt-br', {
           style: 'currency',
           currency: 'BRL',
+          maximumFractionDigits: 2
         })}
-      </h1>
+      </h3>
+      <hr />
+      <h3>Cartão de Crédito: {pagamentoCC}</h3>
+      <h3>Boleto: {pagamentoB}</h3>
+      <hr />
+      <h3>Paga: {pg}</h3>
+      <h3>Recusada pela operadora de cartão: {rec}</h3>
+      <h3>Aguardando pagamento: {ap}</h3>
+      <h3>Estornada: {est}</h3>
+      <h3>Dia com mais vendas: { }</h3>
+      <hr />
+
       <table bgcolor="aliceblue" width="90%" style={{ textAlign: 'center', tableLayout: 'fixed' }}>
         <thead>
           <tr style={{ backgroundColor: 'lightgray' }}>
