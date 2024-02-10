@@ -62,7 +62,7 @@ export const Estatisca = (props: any) => {
 
     function dataMaior() {
         const diasDaSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
-        const cont = [0, 0, 0, 0, 0, 0, 0];
+        const cont = [0];
         data.forEach((element: Faturamento) => {
             const dataString = element.data;
             const partesData = dataString.split(/[/\s:]/);
